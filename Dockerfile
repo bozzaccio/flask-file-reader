@@ -1,24 +1,19 @@
-FROM python:slim
+FROM ubuntu:latest
 
 RUN useradd converter
 
-WORKDIR /home/converter
+WORKDIR /app
 
-COPY requirements.txt requirements.txt
+COPY flask/requirements.txt requirements.txt
 
-RUN python -m venv venv
+RUN apt-get update -y
 
+RUN apt-get install -y pip python-dev
 
-COPY app app
+RUN pip3 install -r requirements.txt
 
-COPY converter.py boot.sh ./
+COPY flask /app
 
-RUN chmod +x boot.sh
+ENTRYPOINT [ "python" ]
 
-ENV FLASK_APP converter.py
-
-RUN chown -R converter:converter ./
-
-USER converter
-EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
+CMD [ "app.py" ]
