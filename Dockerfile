@@ -1,19 +1,22 @@
-FROM ubuntu:latest
+FROM python:3.8-slim
 
 RUN useradd converter
 
 WORKDIR /app
 
-COPY flask/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 
-RUN apt-get update -y
+RUN python -m venv venv
 
-RUN apt-get install -y pip python-dev
+RUN venv/bin/pip install -r requirements.txt
+RUN venv/bin/pip install gunicorn
 
-RUN pip3 install -r requirements.txt
+COPY . /app
 
-COPY flask /app
+RUN chmod 777 -R uploads
+RUN chmod +x boot.sh
 
-ENTRYPOINT [ "python" ]
+ENV FLASK_APP app.py
 
-CMD [ "app.py" ]
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]
