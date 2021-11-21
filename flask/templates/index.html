@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Converter</title>
+        <style>
+            html {
+              height: 100%;
+              width: 100%;
+            }
+            body {
+              min-height: 100%;
+              min-width: 100%;
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              flex-direction: column;
+            }
+            h1 {
+              font-family: sans-serif;
+              font-size: 7vh;
+              font-variant: small-caps;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>{{ title }} - Converter</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="file" name="file" id="fileId" required>
+        </div>
+        <div>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+    </body>
+</html>
